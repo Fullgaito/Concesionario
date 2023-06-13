@@ -1,0 +1,1110 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package vistaGUI;
+
+import controlador.ConexionBD;
+import controlador.ControladorAuto;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.accessibility.AccessibleContext;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import modelo.Automovil;
+
+
+
+/**
+ *
+ * @author 57314
+ */
+public class GUIAutomovil extends javax.swing.JFrame {
+
+    /**
+     * Creates new form GUIBuses
+     */
+    ControladorAuto contauto;
+    Object[]datos;
+    DefaultTableModel model;
+    ConexionBD conn;
+    Connection con;
+    int filas;
+    public String seleccionado="";
+    public String marca="";
+    public GUIAutomovil() {
+        initComponents();
+        contauto = new ControladorAuto();
+        conn = new ConexionBD(); // separo memoria
+        con = conn.conexionDB(); // invoco el metodo
+        datos=new Object[15];
+        model = (DefaultTableModel)jTable1.getModel();
+        insertarDatosDefecto();
+        llenarComboColores();
+        llenarComboMarca();
+    }
+      private void llenarComboColores()
+        {
+         jCcolor.addItem("Amarillo");
+         jCcolor.addItem("Azul");
+         jCcolor.addItem("Negro");
+         jCcolor.addItem("Blanco");
+         jCcolor.addItem("Plata");
+         jCcolor.addItem("Naranja");
+         jCcolor.addItem("Verde");
+        } 
+      private void llenarComboMarca()
+      {
+       jCmarca.addItem("Mazda"); 
+       jCmarca.addItem("Toyota");
+       jCmarca.addItem("Renault");  
+       jCmarca.addItem("Subaru");
+       jCmarca.addItem("Audi"); 
+      }
+    private void insertarDatosDefecto(){
+   
+//        Automovil auto = new Automovil("GNO908", 4, 8, "Mazda", 20000000, "Verde", 4, 7, 8, 4, "Mecanica", 2, 1, "Diesel");
+//        contauto.insertar(auto);
+//        auto = new Automovil("LDN789", 5, 7, "Toyota", 35000000, "Azul", 1, 5, 3, 2, "Mecanica", 7, 4, "Diesel");
+//        contauto.insertar(auto);
+//         auto = new Automovil("LSD653", 6, 9, "Audi", 12000000, "Rosa", 1, 3, 2, 9, "Mecanica", 4, 9, "Diesel");
+//        contauto.insertar(auto);
+        String query = "SELECT * FROM automovil ORDER BY Placa";
+         Statement st;
+         Automovil auto;
+         try {
+            st = con.createStatement();
+            ResultSet rs= st.executeQuery(query);
+            while(rs.next()){
+                auto = new Automovil();
+                auto.setPlaca(rs.getString("placa"));
+                auto.setPrecio(rs.getFloat("precio"));
+                auto.setNumerodecilindros(rs.getInt("NumCilindros"));
+                auto.setColor(rs.getString("color"));
+                auto.setMarca(rs.getString("marca"));
+                auto.setCilindraje(rs.getFloat("cilindraje"));
+                auto.setNumchasis(rs.getInt("NumChasis"));
+                auto.setNummotor(rs.getInt("NumMotor"));
+                auto.setNumpuertas(rs.getInt("NumPuertas"));
+//                auto.setTamllanta(rs.getInt("TamLlanta"));
+                auto.setTransmisión(rs.getString("Transmision"));
+                auto.setNumcambios(rs.getInt("NumCambios"));
+                auto.setGaloneskilometro(rs.getFloat("GalonesKilometro"));
+                auto.setTipogasolina(rs.getString("TipoGasolina"));
+                
+               
+            
+               contauto.insertar(auto);
+         }
+        } catch (SQLException ex) {
+            Logger.getLogger(GUIAutomovil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   
+    for(Automovil auto1:contauto.arregloautos)
+      {
+            datos[0]=auto1.getPlaca();
+            datos[1]=auto1.getColor();
+            datos[2]=auto1.getPrecio();
+            datos[3]=auto1.getMarca();
+            datos[4]=auto1.getTransmisión();
+            datos[5]=auto1.getTipogasolina();
+            datos[6]=auto1.getCilindraje();
+            datos[7]=auto1.getNumchasis();
+            datos[8]=auto1.getNummotor();
+            datos[9]=auto1.getNumpuertas();
+            datos[10]=auto1.getTamllanta();
+            datos[11]=auto1.getTransmisión();
+            datos[12]=auto1.getNumcambios();
+            datos[13]=auto1.getGaloneskilometro();
+            datos[14]=auto1.getNumerodecilindros();
+            
+            model.addRow(datos);
+      }     
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jTmarca9 = new javax.swing.JTextField();
+        jTmarca12 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLplaca = new javax.swing.JLabel();
+        jLmarca = new javax.swing.JLabel();
+        jLcolor = new javax.swing.JLabel();
+        jLnumerodecilindros = new javax.swing.JLabel();
+        jLprecio = new javax.swing.JLabel();
+        jTtamllanta = new javax.swing.JTextField();
+        jBInsertar = new javax.swing.JButton();
+        jBBorrar = new javax.swing.JButton();
+        jBOrdenarPlaca = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLcilindraje = new javax.swing.JLabel();
+        jLnumchasis = new javax.swing.JLabel();
+        jLnumpuertas = new javax.swing.JLabel();
+        jLnummotor = new javax.swing.JLabel();
+        jLtamllanta = new javax.swing.JLabel();
+        jLtransmision = new javax.swing.JLabel();
+        jLnumcambios = new javax.swing.JLabel();
+        jLgalosneskilometro = new javax.swing.JLabel();
+        jLtipogasolina = new javax.swing.JLabel();
+        jTnumpuertas = new javax.swing.JTextField();
+        jTtransmision = new javax.swing.JTextField();
+        jTnumcambios = new javax.swing.JTextField();
+        jTplaca = new javax.swing.JTextField();
+        jTnumerodecilindros = new javax.swing.JTextField();
+        jTprecio = new javax.swing.JTextField();
+        jTnumchasis = new javax.swing.JTextField();
+        jTnummotor = new javax.swing.JTextField();
+        jTgaloneskilometro = new javax.swing.JTextField();
+        jTtipogasolina = new javax.swing.JTextField();
+        jCcolor = new javax.swing.JComboBox<>();
+        jCmarca = new javax.swing.JComboBox<>();
+        jTcilindraje = new javax.swing.JTextField();
+        jBOrdenarMotor = new javax.swing.JButton();
+        jBmodificar = new javax.swing.JButton();
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel1.setText("Controlador de Automovil");
+
+        jLplaca.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLplaca.setText("Placa");
+
+        jLmarca.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLmarca.setText("Marca");
+
+        jLcolor.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLcolor.setText("Color");
+
+        jLnumerodecilindros.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLnumerodecilindros.setText("Numero Cilindros");
+
+        jLprecio.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLprecio.setText("Precio");
+
+        jBInsertar.setText("Insertar");
+        jBInsertar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBInsertarActionPerformed(evt);
+            }
+        });
+
+        jBBorrar.setText("Borrar");
+        jBBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBorrarActionPerformed(evt);
+            }
+        });
+
+        jBOrdenarPlaca.setText("Ordenar por Placa");
+        jBOrdenarPlaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBOrdenarPlacaActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Placa", "Color", "Precio", "Marca", "Tip Gasolina", "Cilindraje", "NumChasis", "NumMotor", "NumPuertas", "TamLlanta", "Transmision", "Num Cambios", "Gal Kilometro", "NumCilindros"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jLcilindraje.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLcilindraje.setText("Cilindraje");
+
+        jLnumchasis.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLnumchasis.setText("Numero de Chasis");
+
+        jLnumpuertas.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLnumpuertas.setText("Numero de Puertas");
+
+        jLnummotor.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLnummotor.setText("Numero de Motor");
+
+        jLtamllanta.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLtamllanta.setText("Tamaño de las Llantas");
+
+        jLtransmision.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLtransmision.setText("Transmision");
+
+        jLnumcambios.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLnumcambios.setText("Numero de Cambios");
+
+        jLgalosneskilometro.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLgalosneskilometro.setText("Galones por Kilometro");
+
+        jLtipogasolina.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLtipogasolina.setText("Tipo de Gasolina");
+
+        jCcolor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCcolorActionPerformed(evt);
+            }
+        });
+
+        jCmarca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCmarcaActionPerformed(evt);
+            }
+        });
+
+        jBOrdenarMotor.setText("Ordenar por Numero de Motor");
+        jBOrdenarMotor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBOrdenarMotorActionPerformed(evt);
+            }
+        });
+
+        jBmodificar.setText("Modificar");
+        jBmodificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBmodificarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(388, 388, 388))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLtamllanta)
+                            .addComponent(jLnummotor)
+                            .addComponent(jLnumpuertas)
+                            .addComponent(jLtransmision)
+                            .addComponent(jLnumcambios)
+                            .addComponent(jLprecio)
+                            .addComponent(jLplaca)
+                            .addComponent(jLcolor)
+                            .addComponent(jLnumerodecilindros))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jCmarca, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTnumcambios, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTnumpuertas, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTnummotor, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTtransmision, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTtamllanta, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTnumchasis, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jCcolor, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTnumerodecilindros, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTplaca, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(6, 6, 6))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jBOrdenarMotor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jBmodificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLmarca)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLcilindraje)
+                                    .addGap(90, 90, 90)
+                                    .addComponent(jTcilindraje, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLnumchasis)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(147, 147, 147)
+                                    .addComponent(jTtipogasolina, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLgalosneskilometro)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jTgaloneskilometro, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLtipogasolina)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jBInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(jBBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jBOrdenarPlaca))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 982, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jTplaca, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)
+                                .addComponent(jTnumerodecilindros, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCcolor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(62, 62, 62)
+                                        .addComponent(jLnumerodecilindros, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLcolor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLplaca, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(7, 7, 7)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCmarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLcilindraje, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTcilindraje, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLnumchasis, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTnumchasis, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLnummotor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTnummotor, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLnumpuertas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTnumpuertas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLtamllanta, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTtamllanta, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(8, 8, 8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLtransmision, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTtransmision, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLnumcambios, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTnumcambios, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLgalosneskilometro, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTgaloneskilometro, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLtipogasolina, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTtipogasolina, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBInsertar)
+                    .addComponent(jBBorrar)
+                    .addComponent(jBOrdenarPlaca))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBOrdenarMotor)
+                    .addComponent(jBmodificar))
+                .addGap(19, 19, 19))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jBInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInsertarActionPerformed
+        // TODO add your handling code here:
+        Automovil auto = new Automovil();
+        auto.setPlaca(jTplaca.getText());
+        auto.setNumerodecilindros(Integer.parseInt(jTnumerodecilindros.getText()));
+        auto.setCilindraje(Float.parseFloat(jTcilindraje.getText()));
+        auto.setMarca((String)jCmarca.getSelectedItem());
+        auto.setPrecio(Float.parseFloat(jTprecio.getText()));
+        auto.setColor((String)jCcolor.getSelectedItem());
+        auto.setNumchasis(Integer.parseInt(jTnumchasis.getText()));
+        auto.setNummotor(Integer.parseInt(jTnummotor.getText()));
+        auto.setNumpuertas(Integer.parseInt(jTnumpuertas.getText()));
+        auto.setTamllanta(Integer.parseInt(jTtamllanta.getText()));
+        auto.setTransmisión(jTtransmision.getText());
+        auto.setNumcambios(Integer.parseInt(jTnumcambios.getText()));
+        auto.setGaloneskilometro(Float.parseFloat(jTgaloneskilometro.getText()));
+        auto.setTipogasolina(jTtipogasolina.getText());
+         
+    
+        if(contauto.insertar(auto))
+        {
+            insertarBD(auto);
+            datos[0]=auto.getPlaca();
+            datos[1]=auto.getColor();
+            datos[2]=auto.getPrecio();
+            datos[3]=auto.getMarca();
+            datos[4]=auto.getTransmisión();
+            datos[5]=auto.getTipogasolina();
+            datos[6]=auto.getCilindraje();
+            datos[7]=auto.getNumchasis();
+            datos[8]=auto.getNummotor();
+            datos[9]=auto.getNumpuertas();
+            datos[10]=auto.getTamllanta();
+            datos[11]=auto.getTransmisión();
+            datos[12]=auto.getNumcambios();
+            datos[13]=auto.getGaloneskilometro();
+            datos[14]=auto.getNumerodecilindros();
+            model.addRow(datos);
+            JOptionPane.showMessageDialog(this, "Auto insertado");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Error al insertar ");
+        }
+    }//GEN-LAST:event_jBInsertarActionPerformed
+
+    private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
+        // TODO add your handling code here:
+        int pos = jTable1.getSelectedRow();
+        
+        Automovil auto = new Automovil();
+        auto= contauto.arregloautos.get(pos);
+        JOptionPane.showMessageDialog(null, "Entre a borrar el objeto "+ pos +" "+auto.getPlaca());
+                
+        if(contauto.borrar(auto)){
+            model.removeRow(pos);
+            borrarBD(auto);
+            JOptionPane.showMessageDialog(null, "Objeto Borrado");
+        }
+        else
+            JOptionPane.showMessageDialog(null, "No se pudo borrar el objeto");
+                     
+    }//GEN-LAST:event_jBBorrarActionPerformed
+
+    private void jCcolorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCcolorActionPerformed
+        // TODO add your handling code here:
+        llenarComboColores();
+    }//GEN-LAST:event_jCcolorActionPerformed
+
+    private void jCmarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCmarcaActionPerformed
+        // TODO add your handling code here:
+        llenarComboMarca();
+    }//GEN-LAST:event_jCmarcaActionPerformed
+
+    private void jBOrdenarPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBOrdenarPlacaActionPerformed
+         // TODO add your handling code here:
+       contauto.ordenar();
+       int n=model.getRowCount();
+       for(int i=0; i<n;i++){
+           model.removeRow(0);
+       }
+       for(Automovil auto1:contauto.arregloautos){
+          datos[0]=auto1.getPlaca();
+            datos[1]=auto1.getColor();
+            datos[2]=auto1.getPrecio();
+            datos[3]=auto1.getMarca();
+            datos[4]=auto1.getTransmisión();
+            datos[5]=auto1.getTipogasolina();
+            datos[6]=auto1.getCilindraje();
+            datos[7]=auto1.getNumchasis();
+            datos[8]=auto1.getNummotor();
+            datos[9]=auto1.getNumpuertas();
+            datos[10]=auto1.getTamllanta();
+            datos[11]=auto1.getTransmisión();
+            datos[12]=auto1.getNumcambios();
+            datos[13]=auto1.getGaloneskilometro();
+            datos[14]=auto1.getNumerodecilindros();
+            
+         model.addRow(datos);  
+       } 
+    }//GEN-LAST:event_jBOrdenarPlacaActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        Automovil auto =new Automovil();
+        int pos=jTable1.getSelectedRow();
+        auto=contauto.arregloautos.get(pos);
+        //jTextColor.setText(bus.getColor());
+        //jTextMarca.(bus.getMarca());
+        jTplaca.setText(auto.getPlaca());
+        jTprecio.setText(auto.getPrecio()+"");
+        jTnumerodecilindros.setText(auto.getNumerodecilindros()+"");
+        jCcolor.setSelectedItem(auto.getColor()+"");
+        jCmarca.setSelectedItem(auto.getMarca()+"");
+        jTcilindraje.setText(auto.getCilindraje()+"");
+        jTnummotor.setText(auto.getNummotor()+"");
+        jTnumpuertas.setText(auto.getNumpuertas()+"");
+        jTtamllanta.setText(auto.getTamllanta()+"");
+        jTtransmision.setText(auto.getTransmisión()+"");
+        jTnumcambios.setText(auto.getNumcambios()+"");
+        jTnumchasis.setText(auto.getNumchasis()+"");
+        jTgaloneskilometro.setText(auto.getGaloneskilometro()+"");
+        jTtipogasolina.setText(auto.getTipogasolina()+"");
+    
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jBOrdenarMotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBOrdenarMotorActionPerformed
+        // TODO add your handling code here:
+       contauto.ordenar(0,ControladorAuto.arregloautos.size()-1);
+       int n=model.getRowCount();
+       for(int i=0; i<n;i++){
+           model.removeRow(0);
+       }
+       for(Automovil auto1:contauto.arregloautos){
+            datos[0]=auto1.getPlaca();
+            datos[1]=auto1.getColor();
+            datos[2]=auto1.getPrecio();
+            datos[3]=auto1.getMarca();
+            datos[4]=auto1.getTransmisión();
+            datos[5]=auto1.getTipogasolina();
+            datos[6]=auto1.getCilindraje();
+            datos[7]=auto1.getNumchasis();
+            datos[8]=auto1.getNummotor();
+            datos[9]=auto1.getNumpuertas();
+            datos[10]=auto1.getTamllanta();
+            datos[11]=auto1.getTransmisión();
+            datos[12]=auto1.getNumcambios();
+            datos[13]=auto1.getGaloneskilometro();
+            datos[14]=auto1.getNumerodecilindros();
+            
+         model.addRow(datos);  
+       } 
+    }//GEN-LAST:event_jBOrdenarMotorActionPerformed
+
+    private void jBmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBmodificarActionPerformed
+        // TODO add your handling code here:
+        int pos=jTable1.getSelectedRow();
+        Automovil auto = new Automovil();
+        auto=contauto.arregloautos.get(pos);
+        auto.setNumerodecilindros(Integer.parseInt(jTnumerodecilindros.getText()));
+        auto.setCilindraje(Float.parseFloat(jTcilindraje.getText()));
+        auto.setMarca((String)jCmarca.getSelectedItem());
+        auto.setPrecio(Float.parseFloat(jTprecio.getText()));
+        auto.setColor((String)jCcolor.getSelectedItem());
+        auto.setNumchasis(Integer.parseInt(jTnumchasis.getText()));
+        auto.setNummotor(Integer.parseInt(jTnummotor.getText()));
+        auto.setNumpuertas(Integer.parseInt(jTnumpuertas.getText()));
+        auto.setTamllanta(Integer.parseInt(jTtamllanta.getText()));
+        auto.setTransmisión(jTtransmision.getText());
+        auto.setNumcambios(Integer.parseInt(jTnumcambios.getText()));
+        auto.setGaloneskilometro(Float.parseFloat(jTgaloneskilometro.getText()));
+        auto.setTipogasolina(jTtipogasolina.getText());
+        
+        auto=(Automovil)contauto.modificar(auto);
+        
+        int n= model.getRowCount();
+        for(int i=0;i<n;i++){
+            model.removeRow(0);
+        }
+            for(Automovil auto1:contauto.arregloautos){
+            datos[0]=auto1.getPlaca();
+            datos[1]=auto1.getColor();
+            datos[2]=auto1.getPrecio();
+            datos[3]=auto1.getMarca();
+            datos[4]=auto1.getTransmisión();
+            datos[5]=auto1.getTipogasolina();
+            datos[6]=auto1.getCilindraje();
+            datos[7]=auto1.getNumchasis();
+            datos[8]=auto1.getNummotor();
+            datos[9]=auto1.getNumpuertas();
+            datos[10]=auto1.getTamllanta();
+            datos[11]=auto1.getTransmisión();
+            datos[12]=auto1.getNumcambios();
+            datos[13]=auto1.getGaloneskilometro();
+            datos[14]=auto1.getNumerodecilindros();
+            
+         model.addRow(datos);  
+       } 
+      JOptionPane.showMessageDialog(this, "Auto Modificado");
+    }//GEN-LAST:event_jBmodificarActionPerformed
+    private void insertarBD(Automovil auto)
+    {
+     String query = "INSERT INTO concesionario.buses VALUES('"+
+       auto.getPlaca()+ "',"+auto.getPrecio()+",'"+ auto.getNumerodecilindros()+"','"+
+       auto.getColor()+"','"+ auto.getMarca()+"',"+
+       auto.getCilindraje()+",'"+ auto.getNumchasis()+"',"+
+       auto.getNummotor()+",'"+auto.getNumpuertas()+",'"+auto.getNumpuertas()+",'"+auto.getTamllanta()+",'"+auto.getTransmisión()+"',"+
+       auto.getNumcambios()+",'"+auto.getGaloneskilometro()+",'"+auto.getTipogasolina()+
+       ")";
+        System.out.println(query);      
+        
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate(query);
+            JOptionPane.showMessageDialog(this, "Insertado BD");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "NO Insertado BD");
+            ex.printStackTrace();
+        }
+              
+    }
+    private void borrarBD(Automovil auto)
+    {
+     String query= "DELETE FROM concesionario.automovil where automovil.placa='"+ auto.getPlaca()+"'";
+        System.out.println(query);
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate(query);
+             JOptionPane.showMessageDialog(this, "Auto eliminado BD");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Auto NO eliminado BD");
+            Logger.getLogger(GUIAutomovil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+                
+    }
+    /**
+     * @param args the command line arguments
+     */
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(GUIBuses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(GUIBuses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(GUIBuses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(GUIBuses.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new GUIBuses().setVisible(true);
+//            }
+//        }
+//        );
+//    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBBorrar;
+    private javax.swing.JButton jBInsertar;
+    private javax.swing.JButton jBOrdenarMotor;
+    private javax.swing.JButton jBOrdenarPlaca;
+    private javax.swing.JButton jBmodificar;
+    private javax.swing.JComboBox<String> jCcolor;
+    private javax.swing.JComboBox<String> jCmarca;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLcilindraje;
+    private javax.swing.JLabel jLcolor;
+    private javax.swing.JLabel jLgalosneskilometro;
+    private javax.swing.JLabel jLmarca;
+    private javax.swing.JLabel jLnumcambios;
+    private javax.swing.JLabel jLnumchasis;
+    private javax.swing.JLabel jLnumerodecilindros;
+    private javax.swing.JLabel jLnummotor;
+    private javax.swing.JLabel jLnumpuertas;
+    private javax.swing.JLabel jLplaca;
+    private javax.swing.JLabel jLprecio;
+    private javax.swing.JLabel jLtamllanta;
+    private javax.swing.JLabel jLtipogasolina;
+    private javax.swing.JLabel jLtransmision;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTcilindraje;
+    private javax.swing.JTextField jTgaloneskilometro;
+    private javax.swing.JTextField jTmarca12;
+    private javax.swing.JTextField jTmarca9;
+    private javax.swing.JTextField jTnumcambios;
+    private javax.swing.JTextField jTnumchasis;
+    private javax.swing.JTextField jTnumerodecilindros;
+    private javax.swing.JTextField jTnummotor;
+    private javax.swing.JTextField jTnumpuertas;
+    private javax.swing.JTextField jTplaca;
+    private javax.swing.JTextField jTprecio;
+    private javax.swing.JTextField jTtamllanta;
+    private javax.swing.JTextField jTtipogasolina;
+    private javax.swing.JTextField jTtransmision;
+    // End of variables declaration//GEN-END:variables
+
+    public ControladorAuto getConauto() {
+        return contauto;
+    }
+
+    public void setContbuses(ControladorAuto contauto) {
+        this.contauto = contauto;
+    }
+
+    public Object[] getDatos() {
+        return datos;
+    }
+
+    public void setDatos(Object[] datos) {
+        this.datos = datos;
+    }
+
+    public DefaultTableModel getModel() {
+        return model;
+    }
+
+    public void setModel(DefaultTableModel model) {
+        this.model = model;
+    }
+
+    public JButton getjBBorrar() {
+        return jBBorrar;
+    }
+
+    public void setjBBorrar(JButton jBBorrar) {
+        this.jBBorrar = jBBorrar;
+    }
+
+    public JButton getjBInsertar() {
+        return jBInsertar;
+    }
+
+    public void setjBInsertar(JButton jBInsertar) {
+        this.jBInsertar = jBInsertar;
+    }
+
+    public JButton getjBOrdenarPlaca() {
+        return jBOrdenarPlaca;
+    }
+
+    public void setjBOrdenarPlaca(JButton jBOrdenarPlaca) {
+        this.jBOrdenarPlaca = jBOrdenarPlaca;
+    }
+
+    public JComboBox<String> getjCcolor() {
+        return jCcolor;
+    }
+
+    public void setjCcolor(JComboBox<String> jCcolor) {
+        this.jCcolor = jCcolor;
+    }
+
+    public JComboBox<String> getjCmarca() {
+        return jCmarca;
+    }
+
+    public void setjCmarca(JComboBox<String> jCmarca) {
+        this.jCmarca = jCmarca;
+    }
+
+  
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JLabel getjLcilindraje() {
+        return jLcilindraje;
+    }
+
+    public void setjLcilindraje(JLabel jLcilindraje) {
+        this.jLcilindraje = jLcilindraje;
+    }
+
+    public JLabel getjLcolor() {
+        return jLcolor;
+    }
+
+    public void setjLcolor(JLabel jLcolor) {
+        this.jLcolor = jLcolor;
+    }
+
+    public JLabel getjLgalosneskilometro() {
+        return jLgalosneskilometro;
+    }
+
+    public void setjLgalosneskilometro(JLabel jLgalosneskilometro) {
+        this.jLgalosneskilometro = jLgalosneskilometro;
+    }
+
+    public JLabel getjLmarca() {
+        return jLmarca;
+    }
+
+    public void setjLmarca(JLabel jLmarca) {
+        this.jLmarca = jLmarca;
+    }
+
+    public JLabel getjLnumcambios() {
+        return jLnumcambios;
+    }
+
+    public void setjLnumcambios(JLabel jLnumcambios) {
+        this.jLnumcambios = jLnumcambios;
+    }
+
+    public JLabel getjLnumchasis() {
+        return jLnumchasis;
+    }
+
+    public void setjLnumchasis(JLabel jLnumchasis) {
+        this.jLnumchasis = jLnumchasis;
+    }
+
+    public JLabel getjLnumerodecilindros() {
+        return jLnumerodecilindros;
+    }
+
+    public void setjLnumerodecilindros(JLabel jLnumerodecilindros) {
+        this.jLnumerodecilindros = jLnumerodecilindros;
+    }
+
+    public JLabel getjLnummotor() {
+        return jLnummotor;
+    }
+
+    public void setjLnummotor(JLabel jLnummotor) {
+        this.jLnummotor = jLnummotor;
+    }
+
+   
+
+    public JLabel getjLnumpuertas() {
+        return jLnumpuertas;
+    }
+
+    public void setjLnumpuertas(JLabel jLnumpuertas) {
+        this.jLnumpuertas = jLnumpuertas;
+    }
+
+    
+
+    public JLabel getjLplaca() {
+        return jLplaca;
+    }
+
+    public void setjLplaca(JLabel jLplaca) {
+        this.jLplaca = jLplaca;
+    }
+
+    public JLabel getjLprecio() {
+        return jLprecio;
+    }
+
+    public void setjLprecio(JLabel jLprecio) {
+        this.jLprecio = jLprecio;
+    }
+
+    
+
+    public JLabel getjLtamllanta() {
+        return jLtamllanta;
+    }
+
+    public void setjLtamllanta(JLabel jLtamllanta) {
+        this.jLtamllanta = jLtamllanta;
+    }
+
+    public JLabel getjLtipogasolina() {
+        return jLtipogasolina;
+    }
+
+    public void setjLtipogasolina(JLabel jLtipogasolina) {
+        this.jLtipogasolina = jLtipogasolina;
+    }
+
+    public JLabel getjLtransmision() {
+        return jLtransmision;
+    }
+
+    public void setjLtransmision(JLabel jLtransmision) {
+        this.jLtransmision = jLtransmision;
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public void setjScrollPane1(JScrollPane jScrollPane1) {
+        this.jScrollPane1 = jScrollPane1;
+    }
+
+    public JTable getjTable1() {
+        return jTable1;
+    }
+
+    public void setjTable1(JTable jTable1) {
+        this.jTable1 = jTable1;
+    }
+
+    public JTextField getjTcilindraje() {
+        return jTcilindraje;
+    }
+
+    public void setjTcilindraje(JTextField jTcilindraje) {
+        this.jTcilindraje = jTcilindraje;
+    }
+
+    public JTextField getjTgaloneskilometro() {
+        return jTgaloneskilometro;
+    }
+
+    public void setjTgaloneskilometro(JTextField jTgaloneskilometro) {
+        this.jTgaloneskilometro = jTgaloneskilometro;
+    }
+
+    public JTextField getjTmarca12() {
+        return jTmarca12;
+    }
+
+    public void setjTmarca12(JTextField jTmarca12) {
+        this.jTmarca12 = jTmarca12;
+    }
+
+    public JTextField getjTmarca9() {
+        return jTmarca9;
+    }
+
+    public void setjTmarca9(JTextField jTmarca9) {
+        this.jTmarca9 = jTmarca9;
+    }
+
+    public JTextField getjTnumcambios() {
+        return jTnumcambios;
+    }
+
+    public void setjTnumcambios(JTextField jTnumcambios) {
+        this.jTnumcambios = jTnumcambios;
+    }
+
+    public JTextField getjTnumchasis() {
+        return jTnumchasis;
+    }
+
+    public void setjTnumchasis(JTextField jTnumchasis) {
+        this.jTnumchasis = jTnumchasis;
+    }
+
+    public JTextField getjTnumerodecilindros() {
+        return jTnumerodecilindros;
+    }
+
+    public void setjTnumerodecilindros(JTextField jTnumerodecilindros) {
+        this.jTnumerodecilindros = jTnumerodecilindros;
+    }
+
+    public JTextField getjTnummotor() {
+        return jTnummotor;
+    }
+
+    public void setjTnummotor(JTextField jTnummotor) {
+        this.jTnummotor = jTnummotor;
+    }
+
+    
+    public JTextField getjTnumpuertas() {
+        return jTnumpuertas;
+    }
+
+    public void setjTnumpuertas(JTextField jTnumpuertas) {
+        this.jTnumpuertas = jTnumpuertas;
+    }
+
+    
+    public JTextField getjTplaca() {
+        return jTplaca;
+    }
+
+    public void setjTplaca(JTextField jTplaca) {
+        this.jTplaca = jTplaca;
+    }
+
+    public JTextField getjTprecio() {
+        return jTprecio;
+    }
+
+    public void setjTprecio(JTextField jTprecio) {
+        this.jTprecio = jTprecio;
+    }
+
+    public JTextField getjTtamllanta() {
+        return jTtamllanta;
+    }
+
+    public void setjTtamllanta(JTextField jTtamllanta) {
+        this.jTtamllanta = jTtamllanta;
+    }
+
+    public JTextField getjTtipogasolina() {
+        return jTtipogasolina;
+    }
+
+    public void setjTtipogasolina(JTextField jTtipogasolina) {
+        this.jTtipogasolina = jTtipogasolina;
+    }
+
+    public JTextField getjTtransmision() {
+        return jTtransmision;
+    }
+
+    public void setjTtransmision(JTextField jTtransmision) {
+        this.jTtransmision = jTtransmision;
+    }
+
+    public JButton getjBmodificar() {
+        return jBmodificar;
+    }
+
+    public void setjBmodificar(JButton jBmodificar) {
+        this.jBmodificar = jBmodificar;
+    }
+
+    
+
+}
